@@ -71,9 +71,4 @@ public class Test
 		}
 		return encoding.GetString(result.ToArray());
 	}
-} $"mid(bin(mid(hex({query}),{2 * i - 1})),{j},1)"))));
-			result.Add(Convert.ToInt16(byte1, 2));
-		}
-		return encoding.GetString(result.ToArray());
-	}
 }
