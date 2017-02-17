@@ -1,3 +1,8 @@
 #招待系URL
 https://web.lobi.co/invite/{uid}
 https://web.lobi.co/api/invitation/info?uid={uid}
+
+・チャンク生成
+・スキンのメモリ消費最適化
+・ネットワーク処理
+・プラグイン向け高速ユーティリティ
