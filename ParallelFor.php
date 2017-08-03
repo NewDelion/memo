@@ -3,6 +3,8 @@
 # 参考
 # https://github.com/hironobu-s/parallel-for
 
+# pthreadsで並列処理してみた
+
 class ParallelFor{
 	private $num_child = 4;
 	private $aggregator = null;
